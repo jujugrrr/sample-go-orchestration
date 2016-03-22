@@ -84,3 +84,20 @@ $ curl 54.229.151.170
 $ curl 54.229.151.170
  Hi there, I'm served from ip-10-0-1-205!
 ```
+
+# Design choices
+
+I've used Terraform over CloudFormation due to its simplicity, readability and ability to "plan" a change/update.
+I've used chef-solo to reduce the complexity of having a Chef server infrastructure. I wanted to try an "artifact" approach.
+It's mainly a proof of concept, we would need more network isolation. The solution is not HA, and cannot really scale. It's idempotent though.
+
+## Todo
+
+* Use autoscale groups for web and application
+* Have dedicated network for web (public) and application(private + NAT)
+* Improve output
+* Add more variables (AMI, etc...)
+* Implement code-deploy so we don't need to run Chef again for a new code deployment
+* use ELB or some DNS update to load-balancer the web nodes
+* Test Terraform in circleci
+* Centralized terraform state
